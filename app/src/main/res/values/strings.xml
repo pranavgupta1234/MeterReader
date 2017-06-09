@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">MeterReader</string>
+    <string name="flat_no">Flat No</string>
+    <string name="name">Name of Occupant</string>
+    <string name="meter_no">Meter Number</string>
+    <string name="capacity">Capacity</string>
+    <string name="date_of_occupation">Date of Occupation</string>
 </resources>
