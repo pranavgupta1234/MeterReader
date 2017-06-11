@@ -9,25 +9,40 @@ import android.widget.EditText;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import pranav.apps.amazing.meterreader.session.SessionManager;
 
 public class LoginActivity extends AppCompatActivity {
+
+    private SessionManager session;
 
     @BindView(R.id.name) EditText name;
     @BindView(R.id.password) EditText password;
     @BindView(R.id.login) Button login;
+
+    @OnClick(R.id.login)
+    void validateCredentials(){
+        if(name.getText().toString().contentEquals("") || password.getText().toString().contentEquals("")){
+            if(name.getText().toString().contentEquals("") && password.getText().toString().contentEquals("")){
+                name.setError("Please enter your name");
+                password.setError("Please enter your password");
+            }else if(password.getText().toString().contentEquals("")){
+                password.setError("Please enter your password");
+            }else if(name.getText().toString().contentEquals("")){
+                name.setError("Please enter your name");
+            }
+        }else {
+            session = new SessionManager(LoginActivity.this);
+            session.createLoginSession(name.getText().toString());
+            startActivity(new Intent(LoginActivity.this,MainActivity.class));
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_main);
         ButterKnife.bind(this);
-
-        login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this,MainActivity.class));
-            }
-        });
     }
 
     @Override
