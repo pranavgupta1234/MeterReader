@@ -53,16 +53,6 @@ public class DBManagerLocal extends SQLiteOpenHelper {
 
         Cursor cursor = db.rawQuery("SELECT * FROM data ;",null);
 
-        Cursor c =  db.rawQuery("SELECT * FROM data WHERE flat_id = \""+reading.getFlat_id()+"\";", null);
-
-        c.moveToFirst();
-        int count = c.getCount();
-
-        if (count>0) {
-            Toast.makeText(context,"Already Present",Toast.LENGTH_SHORT).show();
-            return false;
-        }
-
         ContentValues contentValues = new ContentValues();
 
         contentValues.put("flat_id",reading.getFlat_id());
@@ -73,7 +63,6 @@ public class DBManagerLocal extends SQLiteOpenHelper {
         contentValues.put("status",reading.getStatus());
         db.insert("data", null, contentValues);
 
-        c.close();
         cursor.close();
         return true;
     }
