@@ -13,13 +13,15 @@ public class Reading {
     private String takenOn;
     private String remarks;
     private String takenBy;
+    private String status;
 
-    public Reading(String flat_id, String newReading, String takenOn, String remarks, String takenBy) {
+    public Reading(String flat_id, String newReading, String takenOn, String remarks, String takenBy,String status) {
         this.flat_id = flat_id;
         this.newReading = newReading;
         this.takenOn = takenOn;
         this.remarks = remarks;
         this.takenBy = takenBy;
+        this.status = status;
     }
 
     public String getFlat_id() {
@@ -44,6 +46,14 @@ public class Reading {
 
     public void setTakenOn(String takenOn) {
         this.takenOn = takenOn;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getRemarks() {

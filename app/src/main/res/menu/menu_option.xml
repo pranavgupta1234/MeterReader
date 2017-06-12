@@ -1,0 +1,16 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/sync"
+        android:orderInCategory="300"
+        android:title="Sync"
+        android:icon="@drawable/sync"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/developers_activity"
+        android:title="Developers"
+        android:orderInCategory="200"
+        app:showAsAction="never" />
+
+</menu>

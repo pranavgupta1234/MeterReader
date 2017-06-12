@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -18,7 +20,7 @@ public class LoginActivity extends AppCompatActivity {
 
     @BindView(R.id.name) EditText name;
     @BindView(R.id.password) EditText password;
-    @BindView(R.id.login) Button login;
+    @BindView(R.id.login) ImageView login;
 
     @OnClick(R.id.login)
     void validateCredentials(){
