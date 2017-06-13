@@ -36,7 +36,8 @@ public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.name) EditText name;
     @BindView(R.id.password) EditText password;
     @BindView(R.id.login) ImageView login;
-    private String URL_LOGIN;
+    private String URL_LOGIN = "https://pranavgupta4321.000webhostapp.com/metereader/endpoints/login.php";
+    private ProgressDialog progressDialog;
 
     @OnClick(R.id.login)
     void validateCredentials(){
@@ -50,9 +51,7 @@ public class LoginActivity extends AppCompatActivity {
                 name.setError("Please enter your name");
             }
         }else {
-            session = new SessionManager(LoginActivity.this);
-            session.createLoginSession(name.getText().toString());
-            startActivity(new Intent(LoginActivity.this,MainActivity.class));
+            checkLogin(name.getText().toString(),password.getText().toString());
         }
     }
 
@@ -66,12 +65,12 @@ public class LoginActivity extends AppCompatActivity {
     /**
      * function to verify login details in mysql db
      * */
-    private void checkLogin(final String email, final String password) {
+    private void checkLogin(final String name, final String password) {
 
         // Tag used to cancel the request
         String tag_string_req = "req_login";
 
-        ProgressDialog.show(LoginActivity.this,"Login","Checking...").setCancelable(false);
+        showProcessDialog();
 
         StringRequest strReq = new StringRequest(Request.Method.POST,
                 URL_LOGIN, new Response.Listener<String>() {
@@ -80,29 +79,31 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(String response) {
 
                 try {
+                    response = response.substring(response.indexOf("{"),response.lastIndexOf("}")+1);
+                    Toast.makeText(LoginActivity.this,response,Toast.LENGTH_LONG).show();
                     JSONObject jObj = new JSONObject(response);
                     boolean error = jObj.getBoolean("error");
 
                     // Check for error node in json
                     if (!error) {
+
+                        progressDialog.dismiss();
+
+                        session = new SessionManager(LoginActivity.this);
+                        session.createLoginSession(name);
+                        startActivity(new Intent(LoginActivity.this,MainActivity.class));
+
                         // user successfully logged in
-                        // Create login session
 
-                        // Now store the user in SQLite
-                        String uid = jObj.getString("uid");
-
+/*                        String uid = jObj.getString("uid");
                         JSONObject user = jObj.getJSONObject("user");
                         String name = user.getString("name");
                         String email = user.getString("email");
                         String created_at = user
-                                .getString("created_at");
+                                .getString("created_at");*/
 
-                        // Launch main activity
-                        Intent intent = new Intent(LoginActivity.this,
-                                MainActivity.class);
-                        startActivity(intent);
-                        finish();
                     } else {
+                        progressDialog.dismiss();
                         // Error in login. Get the error message
                         String errorMsg = jObj.getString("error_msg");
                         Toast.makeText(getApplicationContext(),
@@ -129,7 +130,7 @@ public class LoginActivity extends AppCompatActivity {
             protected Map<String, String> getParams() {
                 // Posting parameters to login url
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("email", email);
+                params.put("name", name);
                 params.put("password", password);
 
                 return params;
@@ -141,7 +142,15 @@ public class LoginActivity extends AppCompatActivity {
         MeterReader.getInstance().addToRequestQueue(strReq, tag_string_req);
     }
 
+    private void showProcessDialog() {
 
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("Login");
+        progressDialog.setCancelable(false);
+        progressDialog.setMessage("logging in...");
+        progressDialog.show();
+
+    }
 
     @Override
     protected void onDestroy() {
