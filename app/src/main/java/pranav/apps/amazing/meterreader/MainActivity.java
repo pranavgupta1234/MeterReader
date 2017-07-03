@@ -20,8 +20,11 @@ import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -51,8 +54,15 @@ public class MainActivity extends AppCompatActivity {
     private SessionManager sessionManager;
     private DBManagerLocal dbManagerLocal;
     private ProgressDialog progressDialog;
+    private static final String URL_GET_CAMPUSES = "https://pranavgupta4321.000webhostapp.com/metereader/endpoints/campuses.php";
+    private static final String URL_GET_BUILDINGS = "https://pranavgupta4321.000webhostapp.com/metereader/endpoints/buildings.php";
+    private static final String URL_GET_FLATS = "https://pranavgupta4321.000webhostapp.com/metereader/endpoints/flats.php";
     private static final String URL_NEW_READING = "https://pranavgupta4321.000webhostapp.com/metereader/endpoints/reading.php";
+    private static String TAG = MainActivity.class.getSimpleName();
 
+
+    // temporary string to show the parsed response
+    private String jsonResponse;
 
     @OnClick(R.id.submit)
     void saveReading(){
@@ -90,7 +100,35 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         toolbar.setTitleTextColor(Color.parseColor("#ffffff"));
         toolbar.setLogo(R.mipmap.ic_launcher);
+
+
+
+        /*Populate Campus dropdown(spinner) with a list of districts in HP*/
+        populateCampusSpinner();
+
+        /*Populates the Building dropdown(spinner) with a dummy option of "Select Building" */
+        populateBuildingSpinner();
+
+        /*Populates the Flat dropdown(spinner) with a dummy option of "Select Flat" */
+        populateFlatDropdown();
+
+        /*When a campus is selected this method updates the building spinner according to the selected district*/
+        //setCampusChangeListener();
+
+        /*When a police station is selected this method updates the police post spinner according to selected police post*/
+        //setBuildingChangeListener();
+
     }
+
+    private void populateFlatDropdown() {
+    }
+
+    private void populateBuildingSpinner() {
+    }
+
+    private void populateCampusSpinner() {
+    }
+
 
 
     @Override
@@ -122,63 +160,47 @@ public class MainActivity extends AppCompatActivity {
 
         showProcessDialog();
 
-        StringRequest strReq = new StringRequest(Request.Method.POST,
-                URL_NEW_READING, new Response.Listener<String>() {
+        JsonArrayRequest req = new JsonArrayRequest(URL_GET_CAMPUSES,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.d(TAG, response.toString());
 
-            @Override
-            public void onResponse(String response) {
+                        try {
+                            // Parsing json array response
+                            // loop through each json object
+                            jsonResponse = "";
+                            for (int i = 0; i < response.length(); i++) {
 
-                progressDialog.dismiss();
+                                JSONObject campus = (JSONObject)response.get(i);
 
-                try {
-                    JSONObject jObj = new JSONObject(response);
-                    boolean error = jObj.getBoolean("error");
+                                String name = campus.getString("Name");
+                                Toast.makeText(MainActivity.this,name,Toast.LENGTH_SHORT).show();
+                            }
 
-                    if (!error) {
-                        // User successfully stored in MySQL
-                        // Now store the user in sqlite
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Toast.makeText(getApplicationContext(),
+                                    "Error: " + e.getMessage(),
+                                    Toast.LENGTH_LONG).show();
+                        }
 
-                        Toast.makeText(getApplicationContext(), "Data successfully inserted", Toast.LENGTH_LONG).show();
-
-                    } else {
-
-                        // Error occurred in registration. Get the error
-                        // message
-                        String errorMsg = jObj.getString("error_msg");
-                        Toast.makeText(getApplicationContext(),
-                                errorMsg, Toast.LENGTH_LONG).show();
+                        progressDialog.dismiss();
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        }, new Response.ErrorListener() {
-
+                }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                VolleyLog.d(TAG, "Error: " + error.getMessage());
                 Toast.makeText(getApplicationContext(),
-                        error.getMessage(), Toast.LENGTH_LONG).show();
+                        error.getMessage(), Toast.LENGTH_SHORT).show();
                 progressDialog.dismiss();
             }
-        }) {
+        });
 
-            @Override
-            protected Map<String, String> getParams() {
-                // Posting params to register url
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("flat_id", flat_id);
-                params.put("reading", newReading);
-                params.put("remarks", remarks);
-                params.put("name",name);
-                params.put("takenOn","2012-10-30 22:55:12");
-                return params;
-            }
 
-        };
 
         // Adding request to request queue
-        MeterReader.getInstance().addToRequestQueue(strReq, tag_string_req);
+        MeterReader.getInstance().addToRequestQueue(req,tag_string_req);
     }
 
     private void showProcessDialog() {

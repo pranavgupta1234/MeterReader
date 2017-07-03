@@ -14,38 +14,74 @@
         android:id="@+id/toolbar">
     </android.support.v7.widget.Toolbar>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="8dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/campus_no"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_indicator"
+                android:textStyle="bold|italic" />
+
+            <android.support.v7.widget.AppCompatSpinner
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_margin="8dp"
+                android:background="@drawable/custom_background"
+                android:id="@+id/campus_no"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="@string/building_no"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_indicator"
+                android:textStyle="bold|italic" />
+
+            <android.support.v7.widget.AppCompatSpinner
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_margin="8dp"
+                android:background="@drawable/custom_background"
+                android:id="@+id/building_no"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
     <TextView
-        android:text="@string/building_no"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:textColor="@color/white"
-        android:textSize="@dimen/text_size_indicator"
-        android:textStyle="bold|italic"
-        android:layout_marginTop="8dp"/>
-
-    <android.support.v7.widget.AppCompatSpinner
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:background="@drawable/custom_background"
-        android:layout_margin="8dp">
-    </android.support.v7.widget.AppCompatSpinner>
-
-    <TextView
         android:text="@string/flat_no"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:textColor="@color/white"
         android:textSize="@dimen/text_size_indicator"
-        android:textStyle="bold|italic"/>
+        android:textStyle="bold|italic" />
 
     <android.support.v7.widget.AppCompatSpinner
         android:layout_width="match_parent"
         android:layout_height="70dp"
+        android:layout_margin="8dp"
         android:background="@drawable/custom_background"
-        android:layout_margin="8dp">
-    </android.support.v7.widget.AppCompatSpinner>
+        android:id="@+id/flat_no"/>
 
     <TextView
         android:text="@string/resident_details"
@@ -55,6 +91,7 @@
         android:textColor="@color/white"
         android:textSize="@dimen/text_size_indicator"
         android:textStyle="bold|italic"/>
+
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

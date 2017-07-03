@@ -5,10 +5,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -41,6 +38,7 @@ public class LoginActivity extends AppCompatActivity {
 
     @OnClick(R.id.login)
     void validateCredentials(){
+
         if(name.getText().toString().contentEquals("") || password.getText().toString().contentEquals("")){
             if(name.getText().toString().contentEquals("") && password.getText().toString().contentEquals("")){
                 name.setError("Please enter your name");
@@ -51,8 +49,9 @@ public class LoginActivity extends AppCompatActivity {
                 name.setError("Please enter your name");
             }
         }else {
-            checkLogin(name.getText().toString(),password.getText().toString());
+            checkLogin(name.getText().toString().trim(),password.getText().toString().trim());
         }
+
     }
 
     @Override
@@ -79,6 +78,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(String response) {
 
                 try {
+
                     response = response.substring(response.indexOf("{"),response.lastIndexOf("}")+1);
                     Toast.makeText(LoginActivity.this,response,Toast.LENGTH_LONG).show();
                     JSONObject jObj = new JSONObject(response);

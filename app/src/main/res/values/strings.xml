@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Meter Reader</string>
     <string name="building_no">Building Number</string>
+    <string name="campus_no">Campus Number</string>
     <string name="flat_no">Flat Number</string>
     <string name="name">Name of Occupant</string>
     <string name="meter_no">Meter Number</string>

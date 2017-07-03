@@ -11,6 +11,9 @@ import java.util.ArrayList;
 
 import pranav.apps.amazing.meterreader.pojo.Details;
 
+/** this local database corresponds to the local cached details of the residents present in the institute
+ * */
+
 public class DBManagerDetails extends SQLiteOpenHelper {
 
     private Context context;

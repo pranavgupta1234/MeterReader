@@ -12,6 +12,10 @@ import java.util.ArrayList;
 import pranav.apps.amazing.meterreader.pojo.Details;
 import pranav.apps.amazing.meterreader.pojo.Reading;
 
+/**
+ * this local database corresponds to the entries stored after user visits the field
+ */
+
 public class DBManagerLocal extends SQLiteOpenHelper {
 
     private Context context;
@@ -36,50 +40,50 @@ public class DBManagerLocal extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean checkIfPresent(Reading reading){
+    public boolean checkIfPresent(Reading reading) {
         SQLiteDatabase db = getReadableDatabase();
 
-        Cursor cursor = db.rawQuery("SELECT * FROM data WHERE flat_id = \""+reading.getFlat_id()+"\";",null);
-        if(cursor.getCount()==0){
+        Cursor cursor = db.rawQuery("SELECT * FROM data WHERE flat_id = \"" + reading.getFlat_id() + "\";", null);
+        if (cursor.getCount() == 0) {
             cursor.close();
             return false;
         }
         return true;
     }
 
-    public boolean add(Reading reading){
+    public boolean add(Reading reading) {
 
         SQLiteDatabase db = getWritableDatabase();
 
-        Cursor cursor = db.rawQuery("SELECT * FROM data ;",null);
+        Cursor cursor = db.rawQuery("SELECT * FROM data ;", null);
 
         ContentValues contentValues = new ContentValues();
 
-        contentValues.put("flat_id",reading.getFlat_id());
-        contentValues.put("taken_by",reading.getTakenBy());
-        contentValues.put("taken_on",reading.getTakenOn());
-        contentValues.put("new_reading",reading.getNewReading());
-        contentValues.put("remarks",reading.getRemarks());
-        contentValues.put("status",reading.getStatus());
+        contentValues.put("flat_id", reading.getFlat_id());
+        contentValues.put("taken_by", reading.getTakenBy());
+        contentValues.put("taken_on", reading.getTakenOn());
+        contentValues.put("new_reading", reading.getNewReading());
+        contentValues.put("remarks", reading.getRemarks());
+        contentValues.put("status", reading.getStatus());
         db.insert("data", null, contentValues);
 
         cursor.close();
         return true;
     }
 
-    public ArrayList<Reading> get(){
+    public ArrayList<Reading> get() {
 
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor =  db.rawQuery("SELECT * FROM data;", null);
+        Cursor cursor = db.rawQuery("SELECT * FROM data;", null);
         cursor.moveToFirst();
 
         ArrayList<Reading> information = new ArrayList<>();
         //String[] strings = new String[cursor.getCount()];
-        if(cursor.getCount()!=0) {
+        if (cursor.getCount() != 0) {
             while (!cursor.isAfterLast()) {
-                information.add(new Reading(cursor.getString(cursor.getColumnIndex("flat_id")),cursor.getString(cursor.getColumnIndex("new_reading")),
-                        cursor.getString(cursor.getColumnIndex("taken_on")),cursor.getString(cursor.getColumnIndex("remarks")),
-                        cursor.getString(cursor.getColumnIndex("taken_by")),cursor.getString(cursor.getColumnIndex("status"))));
+                information.add(new Reading(cursor.getString(cursor.getColumnIndex("flat_id")), cursor.getString(cursor.getColumnIndex("new_reading")),
+                        cursor.getString(cursor.getColumnIndex("taken_on")), cursor.getString(cursor.getColumnIndex("remarks")),
+                        cursor.getString(cursor.getColumnIndex("taken_by")), cursor.getString(cursor.getColumnIndex("status"))));
                 cursor.moveToNext();
             }
         }
@@ -87,13 +91,13 @@ public class DBManagerLocal extends SQLiteOpenHelper {
         return information;
     }
 
-    public void delete(Details details){
+    public void delete(Details details) {
 
         SQLiteDatabase db = getWritableDatabase();
-        Cursor c =  db.rawQuery( "SELECT * FROM data WHERE flat_id = \""+ details.getFlat_id()+"\";", null);
+        Cursor c = db.rawQuery("SELECT * FROM data WHERE flat_id = \"" + details.getFlat_id() + "\";", null);
         c.moveToFirst();
 
-        db.execSQL("DELETE * FROM data WHERE flat_id = \""+details.getFlat_id()+"\";");
+        db.execSQL("DELETE * FROM data WHERE flat_id = \"" + details.getFlat_id() + "\";");
         c.close();
     }
 
