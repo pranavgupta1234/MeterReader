@@ -12,9 +12,13 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -49,7 +53,9 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.submit) ImageButton submit;
     @BindView(R.id.remarks) EditText remarks;
     @BindView(R.id.reading) EditText newReading;
-
+    @BindView(R.id.campus_no) Spinner campusSpinner;
+    @BindView(R.id.building_no) Spinner buildingSpinner;
+    @BindView(R.id.flat_no) Spinner flatSpinner;
 
     private SessionManager sessionManager;
     private DBManagerLocal dbManagerLocal;
@@ -113,23 +119,141 @@ public class MainActivity extends AppCompatActivity {
         populateFlatDropdown();
 
         /*When a campus is selected this method updates the building spinner according to the selected district*/
-        //setCampusChangeListener();
+        setCampusChangeListener();
 
         /*When a police station is selected this method updates the police post spinner according to selected police post*/
-        //setBuildingChangeListener();
+        setBuildingChangeListener();
 
     }
 
-    private void populateFlatDropdown() {
+
+    private void populateCampusSpinner() {
+
+        /*Create an ArrayAdapter for all the districts for the districts dropdown*/
+        ArrayAdapter<CharSequence> CampusArrayAdapter = ArrayAdapter.createFromResource(this,
+                R.array.campuses, R.layout.spinner_layout);
+
+        /*Specify the layout to use when the list of choices appears*/
+        CampusArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        /*Apply the adapter to the spinner*/
+        campusSpinner.setAdapter(CampusArrayAdapter);
+
     }
 
     private void populateBuildingSpinner() {
+
+        /*Until a real district is selected show "Select Police Station" in the dropdown*/
+        /*Create an array adapter for "Select Police Station"*/
+        final ArrayAdapter<CharSequence> BuildingArrayAdapter = ArrayAdapter.createFromResource(this,
+                R.array.option_building, R.layout.spinner_layout);
+
+        /*Specify the layout to use when the list of choices appears*/
+        BuildingArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+
+        /*Apply the adapter to the spinner*/
+        buildingSpinner.setAdapter(BuildingArrayAdapter);
+
     }
 
-    private void populateCampusSpinner() {
+
+    private void populateFlatDropdown() {
+
+        /*Until a real police Station is selected show "Select Police Post" in the dropdown*/
+        /*Create an array adapter for "Select Police Post"*/
+        final ArrayAdapter<CharSequence> FlatArrayAdapter = ArrayAdapter.createFromResource(this,
+                R.array.option_flat, R.layout.spinner_layout);
+
+        /*Specify the layout to use when the list of choices appears*/
+        FlatArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        /*Apply the adapter to the spinner*/
+        flatSpinner.setAdapter(FlatArrayAdapter);
+
+
+    }
+
+    private void setCampusChangeListener() {
+
+        campusSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                String campus = (String) parent.getItemAtPosition(position);
+
+                ArrayAdapter<CharSequence> adapter_building = ArrayAdapter.createFromResource(getBaseContext(),
+                        R.array.option_building, R.layout.spinner_layout);
+
+                switch (campus) {
+                    case "South Campus":
+                        adapter_building = ArrayAdapter.createFromResource(getBaseContext(),
+                                R.array.building_south, R.layout.spinner_layout);
+                        break;
+                    case "North Campus":
+
+                        break;
+                    case "Mandi Campus":
+
+                        break;
+                    case "Salgi/School Campus":
+
+                        break;
+                }
+
+                buildingSpinner.setAdapter(adapter_building);
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
     }
 
 
+    private void setBuildingChangeListener() {
+
+        buildingSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                String building_no = (String)parent.getItemAtPosition(position);
+
+                ArrayAdapter<CharSequence> adapter_flat = ArrayAdapter.createFromResource(getBaseContext(),
+                        R.array.option_flat, R.layout.spinner_layout);
+
+                switch (building_no){
+
+                    case "C-1":
+                        adapter_flat = ArrayAdapter.createFromResource(getBaseContext(),
+                                R.array.flat_c1, R.layout.spinner_layout);
+                        break;
+                    case "C-2":
+                        adapter_flat = ArrayAdapter.createFromResource(getBaseContext(),
+                                R.array.flat_c2, R.layout.spinner_layout);
+                        break;
+                    case "C-3":
+                        adapter_flat = ArrayAdapter.createFromResource(getBaseContext(),
+                                R.array.flat_c3, R.layout.spinner_layout);
+                        break;
+                }
+
+                flatSpinner.setAdapter(adapter_flat);
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

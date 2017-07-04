@@ -8,4 +8,46 @@
     <string name="capacity">Capacity</string>
     <string name="date_of_occupation">Date of Occupation</string>
     <string name="resident_details">Resident Details</string>
+
+    <string-array name="campuses">
+        <item>Select Campus</item>
+        <item>North Campus</item>
+        <item>South Campus</item>
+        <item>Mandi Campus</item>
+        <item>Salgi/School Campus</item>
+    </string-array>
+    <string-array name="building_south">
+        <item>Select Building</item>
+        <item>C-1</item>
+        <item>C-2</item>
+        <item>C-3</item>
+    </string-array>
+    <string-array name="option_building">
+        <item>Select Building</item>
+    </string-array>
+    <string-array name="option_flat">
+        <item>Select Flat</item>
+    </string-array>
+
+    <string-array name="flat_c1">
+        <item>GF,NS</item>
+        <item>GF,KS</item>
+        <item>FF,KS</item>
+        <item>FF,NS</item>
+        <item>SF,NS</item>
+        <item>SF,KS</item>
+    </string-array>
+    <string-array name="flat_c2">
+        <item>GF,NS</item>
+        <item>FF,NS</item>
+        <item>FF,KS</item>
+        <item>Second Floor</item>
+    </string-array>
+    <string-array name="flat_c3">
+        <item>Second Floor</item>
+        <item>GF,KS</item>
+        <item>GF,NS</item>
+        <item>FF,NS</item>
+    </string-array>
+
 </resources>

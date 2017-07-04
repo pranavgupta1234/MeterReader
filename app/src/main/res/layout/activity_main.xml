@@ -38,6 +38,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:layout_margin="8dp"
+                android:padding="8dp"
                 android:background="@drawable/custom_background"
                 android:id="@+id/campus_no"/>
         </LinearLayout>
@@ -61,6 +62,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:layout_margin="8dp"
+                android:padding="8dp"
                 android:background="@drawable/custom_background"
                 android:id="@+id/building_no"/>
         </LinearLayout>
@@ -80,6 +82,7 @@
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_margin="8dp"
+        android:padding="8dp"
         android:background="@drawable/custom_background"
         android:id="@+id/flat_no"/>
 
@@ -107,26 +110,31 @@
             android:text="@string/flat_no"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/colorHint"
             android:textSize="@dimen/size_data"/>
         <TextView
             android:text="@string/name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/colorHint"
             android:textSize="@dimen/size_data"/>
         <TextView
             android:text="@string/meter_no"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/colorHint"
             android:textSize="@dimen/size_data"/>
         <TextView
             android:text="@string/capacity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/colorHint"
             android:textSize="@dimen/size_data"/>
         <TextView
             android:text="@string/date_of_occupation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/colorHint"
             android:textSize="@dimen/size_data"/>
 
         </LinearLayout>
