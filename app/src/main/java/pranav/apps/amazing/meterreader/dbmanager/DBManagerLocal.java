@@ -43,7 +43,8 @@ public class DBManagerLocal extends SQLiteOpenHelper {
     public boolean checkIfPresent(Reading reading) {
         SQLiteDatabase db = getReadableDatabase();
 
-        Cursor cursor = db.rawQuery("SELECT * FROM data WHERE flat_id = \"" + reading.getFlat_id() + "\";", null);
+        Cursor cursor = db.rawQuery("SELECT * FROM data WHERE flat_id = \"" + reading.getFlat_id() + "\" AND taken_by = \"" + reading.getTakenBy() + "\"" +
+                "AND new_reading = \"" + reading.getNewReading() + "\";", null);
         if (cursor.getCount() == 0) {
             cursor.close();
             return false;
@@ -91,14 +92,18 @@ public class DBManagerLocal extends SQLiteOpenHelper {
         return information;
     }
 
-    public void delete(Details details) {
 
+
+    public boolean setStatus(Reading reading, String s){
+        //DatabaseUtils.sqlEscapeString(list);
         SQLiteDatabase db = getWritableDatabase();
-        Cursor c = db.rawQuery("SELECT * FROM data WHERE flat_id = \"" + details.getFlat_id() + "\";", null);
+        Cursor c =  db.rawQuery( "SELECT * FROM data WHERE taken_on = \""+reading.getTakenOn()+"\";", null);
         c.moveToFirst();
-
-        db.execSQL("DELETE * FROM data WHERE flat_id = \"" + details.getFlat_id() + "\";");
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("status", s);
+        db.update("data",contentValues,"taken_on = \"" + reading.getTakenOn() + "\"",null);
         c.close();
+        return true;
     }
 
 }

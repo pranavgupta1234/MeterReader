@@ -111,31 +111,36 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/colorHint"
-            android:textSize="@dimen/size_data"/>
+            android:textSize="@dimen/size_data"
+            android:id="@+id/flat_no_text"/>
         <TextView
             android:text="@string/name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/colorHint"
-            android:textSize="@dimen/size_data"/>
+            android:textSize="@dimen/size_data"
+            android:id="@+id/name_text"/>
         <TextView
             android:text="@string/meter_no"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/colorHint"
-            android:textSize="@dimen/size_data"/>
+            android:textSize="@dimen/size_data"
+            android:id="@+id/meter_no_text"/>
         <TextView
             android:text="@string/capacity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/colorHint"
-            android:textSize="@dimen/size_data"/>
+            android:textSize="@dimen/size_data"
+            android:id="@+id/capacity_text"/>
         <TextView
             android:text="@string/date_of_occupation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/colorHint"
-            android:textSize="@dimen/size_data"/>
+            android:textSize="@dimen/size_data"
+            android:id="@+id/date_text"/>
 
         </LinearLayout>
 
@@ -149,7 +154,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:inputType="textEmailAddress"
+            android:inputType="number"
             android:ems="10"
             android:id="@+id/reading"
             android:padding="12dp"

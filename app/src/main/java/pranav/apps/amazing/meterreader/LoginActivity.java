@@ -78,9 +78,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(String response) {
 
                 try {
-
-                    response = response.substring(response.indexOf("{"),response.lastIndexOf("}")+1);
-                    Toast.makeText(LoginActivity.this,response,Toast.LENGTH_LONG).show();
+                    //Toast.makeText(LoginActivity.this,response,Toast.LENGTH_LONG).show();
                     JSONObject jObj = new JSONObject(response);
                     boolean error = jObj.getBoolean("error");
 
@@ -95,19 +93,11 @@ public class LoginActivity extends AppCompatActivity {
 
                         // user successfully logged in
 
-/*                        String uid = jObj.getString("uid");
-                        JSONObject user = jObj.getJSONObject("user");
-                        String name = user.getString("name");
-                        String email = user.getString("email");
-                        String created_at = user
-                                .getString("created_at");*/
-
                     } else {
                         progressDialog.dismiss();
                         // Error in login. Get the error message
-                        String errorMsg = jObj.getString("error_msg");
-                        Toast.makeText(getApplicationContext(),
-                                errorMsg, Toast.LENGTH_LONG).show();
+                        String errorMsg = jObj.getString("error");
+                        Toast.makeText(getApplicationContext(), errorMsg, Toast.LENGTH_LONG).show();
                     }
                 } catch (JSONException e) {
                     // JSON error
@@ -132,7 +122,6 @@ public class LoginActivity extends AppCompatActivity {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("name", name);
                 params.put("password", password);
-
                 return params;
             }
 
